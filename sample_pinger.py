@@ -131,8 +131,13 @@ def ping(host, timeout=1):
     cnt = 0
     # timeout=1 means: If one second goes by without a reply from the server,
     # the client assumes that either the client's ping or the server's pong is lost
-    dest = socket.gethostbyname(host)
-    print("Pinging " + dest + " using Python:")
+    try:
+        dest = socket.gethostbyname(host)
+    except:
+        print("Invalid domain name/IP address. Exiting program.")
+        exit()
+
+    print("Pinging " + dest + " using Python. Press Ctrl-C to view ping results.")
     # Send ping requests to a server separated by approximately one second
     try:
         while True:
@@ -163,4 +168,7 @@ def ping(host, timeout=1):
         # TODO END
 
 if __name__ == '__main__':
-    ping(sys.argv[1])
+    print("Please enter a valid domain name/IP address to ping: ")
+    userInput = input()
+    ping(userInput)
+    #ping(sys.argv[1]) Originally used to extract command line argument IP address/domain name
